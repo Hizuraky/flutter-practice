@@ -1,78 +1,90 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'settings_tab.dart';
-import '/widgets.dart';
-
-class SettingTab extends StatelessWidget {
+class SettingTab extends StatefulWidget {
   static const title = '設定';
   static const androidIcon = Icon(Icons.settings);
   static const iosIcon = Icon(CupertinoIcons.gear);
 
   const SettingTab({super.key});
 
-  Widget _buildBody(BuildContext context) {
-    String titleText = 'Second Page';
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            const Text("Flutter Demo App",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold)),
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'SecondPage title',
-              ),
-              onChanged: (text) {
-                titleText = text;
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  @override
+  State<SettingTab> createState() => _SettingsTabState();
+}
 
-  Widget _buildAndroid(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(title),
-      ),
-      body: _buildBody(context),
-    );
-  }
+class _SettingsTabState extends State<SettingTab> {
+  var switch1 = false;
+  var switch2 = true;
+  var switch3 = true;
+  var switch4 = true;
+  var switch5 = true;
+  var switch6 = false;
+  var switch7 = true;
 
-  Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: SettingsTab.iosIcon,
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).push<void>(
-              CupertinoPageRoute(
-                title: SettingsTab.title,
-                fullscreenDialog: true,
-                builder: (context) => const SettingsTab(),
-              ),
-            );
-          },
+  // Widget _buildBody(BuildContext context) {
+  Widget _buildList() {
+    return ListView(
+      children: [
+        const Padding(padding: EdgeInsets.only(top: 24)),
+        ListTile(
+          title: const Text('Send me marketing emails'),
+          // The Material switch has a platform adaptive constructor.
+          trailing: Switch.adaptive(
+            value: switch1,
+            onChanged: (value) => setState(() => switch1 = value),
+          ),
         ),
-      ),
-      child: _buildBody(context),
+        ListTile(
+          title: const Text('Enable notifications'),
+          trailing: Switch.adaptive(
+            value: switch2,
+            onChanged: (value) => setState(() => switch2 = value),
+          ),
+        ),
+        ListTile(
+          title: const Text('Remind me to rate this app'),
+          trailing: Switch.adaptive(
+            value: switch3,
+            onChanged: (value) => setState(() => switch3 = value),
+          ),
+        ),
+        ListTile(
+          title: const Text('Background song refresh'),
+          trailing: Switch.adaptive(
+            value: switch4,
+            onChanged: (value) => setState(() => switch4 = value),
+          ),
+        ),
+        ListTile(
+          title: const Text('Recommend me songs based on my location'),
+          trailing: Switch.adaptive(
+            value: switch5,
+            onChanged: (value) => setState(() => switch5 = value),
+          ),
+        ),
+        ListTile(
+          title: const Text('Auto-transition playback to cast devices'),
+          trailing: Switch.adaptive(
+            value: switch6,
+            onChanged: (value) => setState(() => switch6 = value),
+          ),
+        ),
+        ListTile(
+          title: const Text('Find friends from my contact list'),
+          trailing: Switch.adaptive(
+            value: switch7,
+            onChanged: (value) => setState(() => switch7 = value),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIos,
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(),
+      child: _buildList(),
     );
   }
 }
